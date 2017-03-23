@@ -1,0 +1,10 @@
+#!/bin/rc
+
+s=`{synclient -l | grep 'TouchpadOff .*=.*0'}
+
+if (~ $#s 0) {
+    synclient 'TouchpadOff=0'
+    }
+if not {
+    synclient 'TouchpadOff=1'
+}

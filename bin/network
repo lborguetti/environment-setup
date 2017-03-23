@@ -1,0 +1,11 @@
+#!/bin/rc
+
+iface=enp2s0
+
+while() {
+    /usr/bin/dhcpcd $iface > /dev/null >[2=1]
+    if(test -f /var/run/dhcpcd-*.pid)  {
+        exit 0
+    }
+    sleep 1
+}
