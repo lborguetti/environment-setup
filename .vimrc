@@ -276,9 +276,10 @@
         Plugin 'Lokaltog/vim-easymotion'
     "}
 
-    " Install bling/vim-airline {
+    " Install vim-airline {
         " Lean & mean status/tabline for vim that's light as air.
-        Plugin 'bling/vim-airline'
+        Plugin 'vim-airline/vim-airline'
+        Plugin 'vim-airline/vim-airline-themes'
     "}
 
     " Install kien/ctrlp {
@@ -373,11 +374,11 @@
 " Plugins Settings {
 "
     " Settings for vim-colorschemes {
-        if filereadable(expand("~/.vim/bundle/vim-colorschemes/colors/wombat256mod.vim"))
+        if filereadable(expand("~/.vim/bundle/vim-colorschemes/colors/zenburn.vim"))
             syntax enable
             set background=dark
             set t_Co=256
-            colorscheme wombat256mod
+            colorscheme zenburn
             hi CursorLine  ctermbg=8
         endif
     "}
@@ -385,7 +386,7 @@
     " Settings for vim-airline {
         if filereadable(expand("~/.vim/bundle/vim-airline/plugin/airline.vim"))
             set laststatus=2
-            let g:airline_theme = 'wombat'
+            let g:airline_theme = 'zenburn'
             let g:airline_powerline_fonts = 1
             let g:airline#extensions#tabline#enabled = 1
             let g:airline#extensions#tabline#fnamemod = ':t'
