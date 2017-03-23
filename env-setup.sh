@@ -2,9 +2,15 @@
 
 set -e
 
-git clone https://github.com/VundleVim/Vundle.vim .vim/bundle/Vundle.vim
-git clone https://github.com/lborguetti/dotnash .nash
-git clone https://github.com/NeowayLabs/nashcomplete .nash/lib/nashcomplete
+if [ ! -d .vim/bundle/Vundle.vim ]; then
+    git clone https://github.com/VundleVim/Vundle.vim .vim/bundle/Vundle.vim
+fi
+if [ ! -d .nash ]; then
+    git clone https://github.com/lborguetti/dotnash .nash
+fi
+if [ ! -d .nash/lib/nashcomplete ]; then
+    git clone https://github.com/NeowayLabs/nashcomplete .nash/lib/nashcomplete
+fi
 
 args="bin
 .fonts
