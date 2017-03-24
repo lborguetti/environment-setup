@@ -28,7 +28,9 @@ fn network_status() {
 
 		state <= get_state($device)
 
-		statusbar = $statusbar+" "+$device+": "+$state
+		if $state == "up" {
+			statusbar = $statusbar+" "+$device+": "+$state
+		}
 	}
 
 	return $statusbar
