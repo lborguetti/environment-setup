@@ -43,7 +43,7 @@ fn load_status() {
 }
 
 fn clock_status() {
-	statusbar <= date "+⏲ %H:%M:%S"
+	statusbar <= date "+%H:%M:%S"
 
 	return $statusbar
 }
