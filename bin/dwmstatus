@@ -24,12 +24,10 @@ fn network_status() {
 	devices  <= split($_devices, "\n")
 
 	for dev in $devices {
-		device = $dev
-
-		state <= get_state($device)
+		state <= get_state($dev)
 
 		if $state == "up" {
-			statusbar = $statusbar+" "+$device+": "+$state
+			statusbar = $statusbar+" "+$dev+": "+$state
 		}
 	}
 
@@ -38,6 +36,30 @@ fn network_status() {
 
 fn load_status() {
 	statusbar <= awk "{print \"♥ \"$1}" /proc/loadavg
+
+	return $statusbar
+}
+
+fn battery_status() {
+	statusbar = "⚡"
+
+	fn get_state(battery) {
+		bfull <= cat $battery+"/charge_full"
+		bnow  <= cat $battery+"/charge_now"
+		state <= echo "100 * "+$bnow+" / "+$bfull | bc
+
+		return $state
+	}
+
+	_batteries <= find /sys/class/power_supply -name "BAT*"
+	batteries  <= split($_batteries, "\n")
+
+	for bat in $batteries {
+		state     <= get_state($bat)
+		name      <= basename $bat | tr "[:upper:]" "[:lower:]"
+
+		statusbar = $statusbar+" "+$name+": "+$state+"%"
+	}
 
 	return $statusbar
 }
@@ -54,8 +76,9 @@ fn update_statusbar() {
 	network   <= network_status()
 	load      <= load_status()
 	clock     <= clock_status()
+	battery   <= battery_status()
 
-	statusbar = "| "+$network+" | "+$load+" | "+$clock
+	statusbar = "| "+$network+" | "+$battery+" | "+$load+" | "+$clock
 
 	xsetroot -name $statusbar
 }
