@@ -1,0 +1,65 @@
+#!/usr/bin/env nash
+
+fn network_status() {
+	statusbar = "☁"
+
+	fn get_state(device) {
+		state <= (
+			ip link show $dev |
+			grep "^[1-9]" |
+			awk "{print tolower($9)}"
+		)
+
+		return $state
+	}
+
+	_devices <= (
+		ip link show |
+		grep "^[1-9]" |
+		sed "s@:@@g" |
+		awk "{print $2}" |
+		grep -v lo
+	)
+
+	devices  <= split($_devices, "\n")
+
+	for dev in $devices {
+		device = $dev
+
+		state <= get_state($device)
+
+		statusbar = $statusbar+" "+$device+": "+$state
+	}
+
+	return $statusbar
+}
+
+fn load_status() {
+	statusbar <= awk "{print \"♥ \"$1}" /proc/loadavg
+
+	return $statusbar
+}
+
+fn clock_status() {
+	statusbar <= date "+⏲ %H:%M:%S"
+
+	return $statusbar
+}
+
+fn update_statusbar() {
+	statusbar = " | "
+
+	network   <= network_status()
+	load      <= load_status()
+	clock     <= clock_status()
+
+	statusbar = "| "+$network+" | "+$load+" | "+$clock
+
+	xsetroot -name $statusbar
+}
+
+for {
+	update_statusbar()
+
+	sleep 1
+}
