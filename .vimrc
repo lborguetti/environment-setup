@@ -374,19 +374,19 @@
 " Plugins Settings {
 "
     " Settings for vim-colorschemes {
-        if filereadable(expand("~/.vim/bundle/vim-colorschemes/colors/zenburn.vim"))
+        if  filereadable(expand("~/.vim/bundle/vim-colorschemes/colors/wombat256.vim"))
             syntax enable
             set background=dark
             set t_Co=256
-            colorscheme zenburn
+            colorscheme wombat256
             hi CursorLine  ctermbg=8
         endif
     "}
 
     " Settings for vim-airline {
-        if filereadable(expand("~/.vim/bundle/vim-airline/plugin/airline.vim"))
+        if  filereadable(expand("~/.vim/bundle/vim-airline-themes/plugin/airline-themes.vim"))
             set laststatus=2
-            let g:airline_theme = 'zenburn'
+            let g:airline_theme = 'wombat'
             let g:airline_powerline_fonts = 1
             let g:airline#extensions#tabline#enabled = 1
             let g:airline#extensions#tabline#fnamemod = ':t'
