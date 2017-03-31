@@ -1,11 +1,13 @@
-#!/bin/rc
+#!/usr/bin/env nash
 
-iface=enp2s0
+iface = "enp2s0"
 
-while() {
-    /usr/bin/dhcpcd $iface > /dev/null >[2=1]
-    if(test -f /var/run/dhcpcd-*.pid)  {
-        exit 0
-    }
-    sleep 1
+for {
+	/usr/bin/dhcpcd -4 $iface > /dev/null >[2=1]
+
+	if $status == "0" {
+		exit 0
+	}
+
+	sleep 1
 }
