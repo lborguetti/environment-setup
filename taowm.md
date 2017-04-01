@@ -1,4 +1,4 @@
-
+```
 	+' '                : exec chromium
 	^' '                : exec chromium in incognito mode
 	^'|'                : exec slock
@@ -55,6 +55,7 @@
 	+F10                : go to workspaceN 9
 	+F11                : go to workspaceN 1
 	+F12                : go to workspaceN 1
+```
 
 	+'i': {doSynthetic, xp.Button(4)},
 	^'I': {doSynthetic, xp.Button(4)},
