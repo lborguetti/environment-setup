@@ -1,21 +1,7 @@
-#!/bin/rc
+#!/usr/bin/env nash
 
-MONITOR=`{xrandr|egrep -o '^HDM.* connected'|awk '{print $1}'}
-PRIMARY=eDP1
+xrandr --listmonitors | grep HDMI1 >[1=]
 
-if(~ $#MONITOR 0) {
-    if (test -f $HOME/.monitor) {
-        monitor=`{cat $HOME/.monitor}
-        xrandr --output $monitor --off
-        xrandr --output $PRIMARY --primary
-        rm -f $HOME/.monitor
-        rio restart
-    }
+if $status == "0" {
+	xrandr --output HDMI1 --auto --above eDP1 --output eDP1 --primary
 }
-if not {
-    xrandr --output $MONITOR --auto --noprimary --above $PRIMARY
-    xrandr --output $PRIMARY --primary
-    echo $MONITOR > $HOME/.monitor
-    rio restart
-}
-
